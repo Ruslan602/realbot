@@ -1,0 +1,13 @@
+[Unit]
+Description=Real Madrid Auto News Bot
+After=network.target
+
+[Service]
+User=ubuntu
+WorkingDirectory=/home/ubuntu/realbot
+EnvironmentFile=/home/ubuntu/realbot/config.env
+ExecStart=/usr/bin/python3 /home/ubuntu/realbot/bot.py
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
