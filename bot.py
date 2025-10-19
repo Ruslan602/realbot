@@ -144,3 +144,23 @@ if __name__ == '__main__':
         asyncio.run(main_loop())
     except KeyboardInterrupt:
         logger.info('Stopped by user')
+
+async def send_live_updates():
+    """Jonli o‘yin holatini chiqarish va gol aniqlansa “GOAL!” deb yozish"""
+    live, goal_detected = await get_live_match()
+
+    if live:
+        text = (
+            f"🏆 {live['competition']}\n"
+            f"⚽️ {live['home']} 🆚 {live['away']}\n"
+            f"📊 Hisob: {live['score']}\n\n"
+            f"#RealMadrid #Live #HalaMadrid"
+        )
+        await bot.send_message(CHANNEL_ID, text)
+
+        # Agar gol bo‘lgan bo‘lsa, “GOAL!” postini yuborish
+        if goal_detected:
+            await bot.send_message(
+                CHANNEL_ID,
+                "⚽️ <b>GOAL!</b> Real Madrid gol urdi! 🔥🔥 #RealMadrid #GOAL"
+            )
